@@ -1,16 +1,25 @@
 def caesar_decrypt(ciphertext, key):
-    plaintext = ""
+    results = ""
     for char in ciphertext:
         if char.isupper():
-            plaintext += (chr((ord(char) - (key + 65)) % 26 + 65))
+            results += (chr((ord(char) - (key + 65)) % 26 + 65))
         elif char.islower():
-            plaintext += (chr((ord(char) - (key + 97)) % 26 + 97))
+            results += (chr((ord(char) - (key + 97)) % 26 + 97))
         else:
-            plaintext += char
-    return plaintext
+            results += char
+    return results
+def caesar_brute_force(ciphertext):
+    candidates = []
 
-ciphertext = input("What is the ciphertext: ")
-key = range(1,26)
-for k in key:
-    plaintext = caesar_decrypt(ciphertext, k)
-    print(f"Key = {k};The plaintext is: {plaintext} ")
+    shift = range(1,26)
+
+    for key in shift:
+        output = caesar_decrypt(ciphertext, key)
+        candidates.append((key, output))
+    return candidates
+if __name__ == "__main__":
+    ciphertext = input("What is the ciphertext: ")
+    candidates = caesar_brute_force(ciphertext)
+    for key, output in candidates:
+        print(f"Key: {key} | Decrypted: {output}")
+        
